@@ -1,0 +1,16 @@
+{
+  "name": "sackbot",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "List recently deactivated slack users",
+  "main": "get-sacked.js",
+  "keywords": [
+    "slack"
+  ],
+  "author": "harriet.f.waters@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "date-fns": "^2.30.0"
+  }
+}
