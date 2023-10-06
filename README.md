@@ -18,7 +18,7 @@ Next do an npm install:
 npm i
 ```
 
-This will put the script in your path for you :)
+This will put the script in your path for you so you can run it as `get-sacked` from anywhere :)
 
 ## Usage
 
