@@ -18,16 +18,18 @@ Next do an npm install:
 npm i
 ```
 
+This will put the script in your path for you :)
+
 ## Usage
 
 ```sh
-./get-sacked.js [days to look back]
+get-sacked [days to look back]
 ```
 
-## Example
+### Example Usage
 
 ```sh
-./get-sacked.js 1
+get-sacked.js 1
 ```
 
 ### Example Output
