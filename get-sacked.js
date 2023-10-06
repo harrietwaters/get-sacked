@@ -90,7 +90,7 @@ async function main() {
       }
     }
   }
-  console.log(JSON.stringify(deletedUsers));
+  console.log(JSON.stringify(deletedUsers, null, "  "));
 }
 
 main();
