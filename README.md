@@ -29,7 +29,7 @@ get-sacked [days to look back]
 ### Example Usage
 
 ```sh
-get-sacked.js 1
+get-sacked 1
 ```
 
 ### Example Output
