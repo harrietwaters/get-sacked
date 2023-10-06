@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "description": "List recently deactivated slack users",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harrietwaters/get-sacked"
+  },
+  "os": [
+    "!win32"
+  ],
   "main": "get-sacked.js",
   "keywords": [
     "slack"

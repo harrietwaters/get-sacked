@@ -1,6 +1,8 @@
 # WHO GOT SACKED?
 
 Check Slack and see who got let go in the last few days.
+<br>
+I'm really smart so this should handle arbitrarily large user bases without getting rate-limited.
 
 ## Getting Started
 

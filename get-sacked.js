@@ -2,20 +2,12 @@
 
 import axios from "axios";
 import { subDays } from "date-fns";
-import { setTimeout } from "timers/promises";
 import { access, readFile } from "fs/promises";
-import { homedir, platform } from "os";
+import { homedir } from "os";
+import { setTimeout } from "timers/promises";
 
 const USAGE = `${process.argv[1]} [days to look back]`;
 const DAYS_BACK = +process.argv[2];
-
-function checkOs() {
-  const notSupported = ["win32"];
-  if (notSupported.includes(platform())) {
-    return false;
-  }
-  return true;
-}
 
 function checkArgs() {
   if (Number.isNaN(DAYS_BACK)) {
@@ -71,12 +63,6 @@ async function* scrollUsers(token) {
 }
 
 async function main() {
-  const osGood = checkOs();
-  if (!osGood) {
-    console.log(`${platform()} is not supported, please use another one`);
-    process.exit(1);
-  }
-
   // check the args
   const argsGood = checkArgs();
   if (!argsGood) {
