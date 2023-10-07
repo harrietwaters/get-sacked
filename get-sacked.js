@@ -53,7 +53,7 @@ async function* scrollUsers() {
 
   while (resp.data.response_metadata.next_cursor) {
     // go slower
-    await setTimeout(2000);
+    await setTimeout(1000);
     resp = await axios.get(slackApiUrl, {
       params: {
         limit,
