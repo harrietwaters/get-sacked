@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 import axios from "axios";
-import { subDays } from "date-fns";
+import { format, subDays } from "date-fns";
 import { access, readFile } from "fs/promises";
+import { Readable } from "node:stream";
 import { homedir } from "os";
 import { setTimeout } from "timers/promises";
 
@@ -30,15 +31,16 @@ async function getSlackToken() {
   const buff = await readFile(credPath);
   const creds = JSON.parse(buff.toString());
 
-  // Just grab the token from the first one
-  return Object.values(creds)[0].token;
-}
-
-async function* scrollUsers(token) {
+  const token = Object.values(creds)[0].token;
   axios.defaults.headers.get = {
     Authorization: `Bearer ${token}`,
   };
 
+  // Just grab the token from the first one
+  return token;
+}
+
+async function* scrollUsers() {
   const slackApiUrl = "https://slack.com/api/users.list";
   const limit = 500;
   let resp = await axios.get(slackApiUrl, {
@@ -62,6 +64,21 @@ async function* scrollUsers(token) {
   }
 }
 
+async function* deletedUsers() {
+  for await (const user of scrollUsers()) {
+    if (user.deleted) {
+      const deletedAt = new Date(user.updated * 1000);
+      const yesterday = subDays(Date.now(), DAYS_BACK);
+      if (user.profile.display_name && deletedAt > yesterday) {
+        yield `${user.profile.display_name},${format(
+          deletedAt,
+          "MM-dd-yyyy"
+        )}\n`;
+      }
+    }
+  }
+}
+
 async function main() {
   // check the args
   const argsGood = checkArgs();
@@ -76,21 +93,11 @@ async function main() {
     process.exit(1);
   }
 
-  const deletedUsers = [];
-  for await (const user of scrollUsers(token)) {
-    if (user.deleted) {
-      const deletedAt = new Date(user.updated * 1000);
-      const yesterday = subDays(Date.now(), DAYS_BACK);
-      if (deletedAt > yesterday) {
-        deletedUsers.push({
-          username: user.name,
-          realName: user.profile.display_name,
-          sackedAt: deletedAt,
-        });
-      }
-    }
-  }
-  console.log(JSON.stringify(deletedUsers, null, "  "));
+  // get our readable
+  const readable = Readable.from(deletedUsers());
+
+  // pipe it outtttt
+  readable.pipe(process.stdout);
 }
 
 main();

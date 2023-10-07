@@ -36,7 +36,9 @@ get-sacked 1
 
 ### Example Output
 
-```
-[{"username":"johnny.unlucky","realName":"Johnny Unlucky","sackedAt":"2023-10-06T15:29:23.000Z"}]
+Output is a streaming list of comma separated values
 
+```
+Johnny Unlucky, 02-30-2023
+Marcy Mei, 02-30-2023
 ```
