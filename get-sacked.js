@@ -32,10 +32,6 @@ async function getSlackToken() {
   const creds = JSON.parse(buff.toString());
 
   const token = Object.values(creds)[0].token;
-  axios.defaults.headers.get = {
-    Authorization: `Bearer ${token}`,
-  };
-
   // Just grab the token from the first one
   return token;
 }
@@ -92,6 +88,10 @@ async function main() {
   if (!token) {
     process.exit(1);
   }
+
+  axios.defaults.headers.get = {
+    Authorization: `Bearer ${token}`,
+  };
 
   // get our readable
   const readable = Readable.from(deletedUsers());
